@@ -21,9 +21,14 @@ export default {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: {
-                    loader: 'ts-loader'
-                }
+                use: [
+                    {
+                      loader: 'ts-loader',
+                      options: {
+                        transpileOnly: true
+                      }
+                    }
+                ]
             }
         ]
     },
@@ -36,6 +41,7 @@ export default {
             name: 'app.js',
             nodeArgs: ['--inspect']
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin()
     ],
 }

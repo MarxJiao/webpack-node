@@ -2,8 +2,8 @@
 
 const app = new Koa();
 
-app.use(async ctx => {
-    ctx.body = 'Hello Worlddd';
+app.use(ctx => {
+    ctx.body = 'Hello Worlddddddddddddddd';
 });
 
 export default app;
