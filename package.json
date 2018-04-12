@@ -20,6 +20,7 @@
     "start-server-webpack-plugin": "^2.2.5",
     "ts-loader": "^4.2.0",
     "ts-node": "^5.0.1",
-    "typescript": "^2.8.1"
+    "typescript": "^2.8.1",
+    "webpack-node-externals": "^1.7.2"
   }
 }

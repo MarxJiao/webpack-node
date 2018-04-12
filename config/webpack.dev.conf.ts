@@ -1,16 +1,22 @@
 import * as path from 'path';
 import * as StartServerPlugin from "start-server-webpack-plugin";
+import * as webpack from 'webpack';
+import * as nodeExternals from 'webpack-node-externals'
 
 export default {
     mode: 'development',
-    entry: {
-        app: path.resolve(__dirname, '../server/app.ts')
-    },
+    entry: [
+        'webpack/hot/poll?1000',
+        path.resolve(__dirname, '../server/app.ts')
+    ],
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: "[name].js",
+        filename: "app.js",
         libraryTarget: "commonjs"
     },
+    externals: [nodeExternals({
+        whitelist: ['webpack/hot/poll?1000']
+    })],
     module: {
         rules: [
             {
@@ -30,5 +36,6 @@ export default {
             name: 'app.js',
             nodeArgs: ['--inspect']
         }),
+        new webpack.HotModuleReplacementPlugin()
     ],
 }
