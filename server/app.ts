@@ -1,5 +1,4 @@
 import * as http from 'http';
-import * as path from 'path';
 import server from './server';
 
 let currentApp = server.callback();
@@ -11,23 +10,26 @@ declare var module: any;
 
 if (module.hot) {
     const list = [
-        './server/server.ts',
-        // './server/app.ts'
+        './server/server.ts'
     ]
     module.hot.accept(list, () => {
-        app.removeListener('request', currentApp);
-        console.log("after `removeListener`", app.listeners("request").length);
-        currentApp = server.callback();
-        console.log(111, currentApp)
-        app.on('request', currentApp);
-        console.log("after `on`", app.listeners("request").length);
-        
+        removeAndAdd();
     });
-    // module.hot.addStatusHandler(status => {
-    //     console.log(status);
-    //     if (status === 'ready') {
-    //         module.hot.apply();
-    //     }
-    //     // React to the current status...
-    // })
+}
+
+function removeAndAdd() {
+    app.removeListener('request', currentApp);
+    console.log("after `removeListener`", app.listeners("request").length);
+    currentApp = server.callback();
+    console.log(111, currentApp)
+    app.on('request', currentApp);
+    console.log("after `on`", app.listeners("request").length);
+}
+
+function CloseAndOpen() {
+    removeAndAdd();
+    app.close(() => {
+        console.log('closed');
+        app.listen(3000);
+    });
 }
