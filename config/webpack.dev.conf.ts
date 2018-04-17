@@ -10,11 +10,10 @@ export default {
         'webpack/hot/signal',
         path.resolve(__dirname, '../server/app.ts')
     ],
-    devtool: "inline-sourcemap",
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: "app.js",
-        libraryTarget: 'commonjs'
+        libraryTarget: 'commonjs2'
     },
     externals: [nodeExternals({
         whitelist: ['webpack/hot/signal']
@@ -26,10 +25,23 @@ export default {
                 test: /\.tsx?$/,
                 use: [
                     {
-                      loader: 'ts-loader',
-                      options: {
-                        transpileOnly: true
-                      }
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                [
+                                    'env',
+                                    {
+                                        "modules": false
+                                    }
+                                ]
+                            ]
+                        }
+                    },
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true
+                        }
                     }
                 ]
             }
@@ -38,6 +50,17 @@ export default {
     target: "node",
     resolve: {
         extensions: [".ts", ".js", ".json"],
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    chunks: "all"
+                }
+            }
+        }
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
