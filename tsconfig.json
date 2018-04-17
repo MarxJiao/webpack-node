@@ -1,16 +1,17 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "noImplicitAny": true,
-        "removeComments": true,
+        // "noImplicitAny": true,
+        // "removeComments": true,
         "preserveConstEnums": true,
-        "sourceMap": true,
+        // "sourceMap": true,
         "moduleResolution": "node",
-        "target": "esnext",
-        "strictNullChecks": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "inlineSources": true,
+        "isolatedModules": true,
+        "target": "es2015",
+        // "strictNullChecks": true,
+        // "noUnusedLocals": true,
+        // "noUnusedParameters": true,
+        // "inlineSources": true,
         "lib": ["es2015"]
     },
     "exclude": [

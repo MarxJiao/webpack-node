@@ -3,8 +3,9 @@ import * as StartServerPlugin from "start-server-webpack-plugin";
 import * as webpack from 'webpack';
 import * as nodeExternals from 'webpack-node-externals'
 
-export default {
+const config: webpack.Configuration = {
     mode: 'development',
+    devtool: 'eval',
     entry: [
         // 'webpack/hot/poll?1000',
         'webpack/hot/signal',
@@ -66,8 +67,10 @@ export default {
         new webpack.HotModuleReplacementPlugin(),
         new StartServerPlugin({
             name: 'app.js',
-            signal: true, // 添加这个貌似可以热加载，但服务更新一次就挂了
+            signal: true,
             nodeArgs: ['--inspect']
         })
     ],
 }
+
+export default config 

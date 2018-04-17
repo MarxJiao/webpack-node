@@ -3,7 +3,7 @@
 const app = new Koa();
 
 app.use(ctx => {
-    ctx.body = 'Hello Worlddddddddddddddd';
+    ctx.body = 'Hello World';
 });
 
 export default app;

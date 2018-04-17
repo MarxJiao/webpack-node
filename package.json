@@ -7,7 +7,7 @@
   "author": "MarxJiao <marxjiao@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node ./scripts/start-dev.ts"
+    "dev": "rm -rf ./dist && ts-node ./scripts/start-dev.ts"
   },
   "dependencies": {
     "koa": "^2.5.0",

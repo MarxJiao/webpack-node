@@ -10,7 +10,9 @@ declare var module: any;
 
 if (module.hot) {
     const list = [
-        './server/server.ts'
+        './server/server.ts',
+        './server/app.ts'
+
     ]
     module.hot.accept(list, () => {
         removeAndAdd();
