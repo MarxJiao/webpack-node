@@ -5,20 +5,17 @@ import * as nodeExternals from 'webpack-node-externals'
 
 const config: webpack.Configuration = {
     mode: 'development',
-    devtool: 'eval',
+    watch: true,
     entry: [
-        // 'webpack/hot/poll?1000',
         'webpack/hot/signal',
-        path.resolve(__dirname, '../server/app.ts')
+        path.resolve(__dirname, '../server/server.ts')
     ],
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: "app.js",
-        libraryTarget: 'commonjs2'
+        filename: "server.js"
     },
     externals: [nodeExternals({
         whitelist: ['webpack/hot/signal']
-        // whitelist: ['webpack/hot/poll?1000']
     })],
     module: {
         rules: [
@@ -27,24 +24,21 @@ const config: webpack.Configuration = {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                [
-                                    'env',
-                                    {
-                                        "modules": false
-                                    }
-                                ]
-                            ]
-                        }
                     },
                     {
                         loader: 'ts-loader',
                         options: {
-                            transpileOnly: true
+                            transpileOnly: true,
+                            configFile: path.resolve(__dirname, './tsconfig.json')
                         }
                     }
-                ]
+                ],
+                exclude: /node_modules/
+            },
+            {
+                test: /\.jsx?$/,
+                use: 'babel-loader',
+                exclude: /node_modules/
             }
         ]
     },
@@ -52,25 +46,15 @@ const config: webpack.Configuration = {
     resolve: {
         extensions: [".ts", ".js", ".json"],
     },
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                commons: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: "vendors",
-                    chunks: "all"
-                }
-            }
-        }
-    },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new StartServerPlugin({
-            name: 'app.js',
+            name: 'server.js',
             signal: true,
             nodeArgs: ['--inspect']
-        })
-    ],
+        }),
+    ]
 }
 
 export default config 

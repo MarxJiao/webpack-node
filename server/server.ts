@@ -1,9 +1,14 @@
- import * as Koa from 'koa';
+import * as http from 'http';
+import app from './app';
 
-const app = new Koa();
+let currentApp = app.callback();
+const server = http.createServer(currentApp);
+server.listen(3000);
 
-app.use(ctx => {
-    ctx.body = 'Hello World';
-});
-
-export default app;
+if (module.hot) {
+    module.hot.accept('./app.ts', () => {
+        server.removeListener('request', currentApp);
+        currentApp = app.callback();
+        server.on('request', currentApp);
+    });
+}
