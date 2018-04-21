@@ -1,7 +1,9 @@
 import * as webpack from 'webpack';
 
-import devConfig from '../config/webpack.prod.conf';
+import WebpackConfig from '../config/Webpack.config';
 
-webpack(devConfig).run((err: Error) => {
+const buildConfig = new WebpackConfig('production');
+
+webpack(buildConfig).run((err: Error) => {
     console.log(err);
 });

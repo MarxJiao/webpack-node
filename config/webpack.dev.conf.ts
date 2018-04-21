@@ -5,7 +5,6 @@ import * as nodeExternals from 'webpack-node-externals'
 
 const config: webpack.Configuration = {
     mode: 'development',
-    watch: true,
     entry: [
         'webpack/hot/signal',
         path.resolve(__dirname, '../server/server.ts')
