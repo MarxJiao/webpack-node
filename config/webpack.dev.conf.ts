@@ -22,9 +22,6 @@ const config: webpack.Configuration = {
                 test: /\.tsx?$/,
                 use: [
                     {
-                        loader: 'babel-loader',
-                    },
-                    {
                         loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
@@ -32,11 +29,6 @@ const config: webpack.Configuration = {
                         }
                     }
                 ],
-                exclude: /node_modules/
-            },
-            {
-                test: /\.jsx?$/,
-                use: 'babel-loader',
                 exclude: /node_modules/
             }
         ]
