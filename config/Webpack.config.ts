@@ -38,17 +38,17 @@ class WebpackConfig implements Configuration {
     constructor(mode: Configuration['mode']) {
         this.mode = mode;
         if (mode === 'development') {
-            this.entry.push('webpack/hot/signal');
+            this.entry.push('webpack/hot/poll?1000');
             this.externals.push(
                 nodeExternals({
-                    whitelist: ['webpack/hot/signal']
+                    whitelist: ['webpack/hot/poll?1000']
                 })
             );
             const devPlugins = [
                 new webpack.HotModuleReplacementPlugin(),
                 new StartServerPlugin({
                     name: 'server.js',
-                    signal: true,
+                    signal: false,
                     nodeArgs: ['--inspect']
                 }),
             ]
